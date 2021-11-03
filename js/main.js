@@ -19,18 +19,23 @@ const isInRandomArray = (array, num) => {
 	return array.includes(num) ? true : false;
 };
 
-function handleClick(element, randomArray) {
-	console.log(randomArray);
-	element.addEventListener('click', (event) => {
+function handleClick(element, randomArray, cells) {
+	element.addEventListener('click', () => {
 		if (canPlay) {
 			const index = [...document.querySelectorAll('.cell')].indexOf(element) + 1;
-			if (!randomArray.includes(index)) {
+			if (!randomArray.includes(index) && !element.classList.contains('active')) {
 				canPlay = true;
 				counter++;
 				[...document.querySelectorAll('.cell')][index - 1].classList.add('active');
-				footer.innerHTML = `${counter} tentativi riusciti`;
-			} else {
-				canPlay = false;
+				footer.innerHTML = `${counter} Tentativi riusciti`;
+				if (counter === cells - randomArray.length) {
+					canPlay = false;
+					footer.innerHTML = `Complimenti hai vinto😃... Premi Play per ricominciare`;
+					randomArray.forEach((n) => [...document.querySelectorAll('.cell')][n - 1].classList.add('bomb'));
+					[...document.querySelectorAll('.cell')].forEach((el) => (el.style.cursor = 'default'));
+				}
+			} else if (randomArray.includes(index)) {
+				// canPlay = false;
 				[...document.querySelectorAll('.cell')][index - 1].classList.add('bomb');
 				randomArray.forEach((n) => [...document.querySelectorAll('.cell')][n - 1].classList.add('bomb'));
 				[...document.querySelectorAll('.cell')].forEach((el) => (el.style.cursor = 'default'));
@@ -42,7 +47,7 @@ function handleClick(element, randomArray) {
 }
 
 /* Create the grid */
-const amountOfCells = (selectValue) => (selectValue === '1' ? 100 : selectValue === '2' ? 81 : 49);
+const amountOfCells = (selectValue) => (selectValue === '1' ? 100 : selectValue === '2' ? 81 : 25);
 const amountOfCols = (amountOfCells) => Math.sqrt(amountOfCells);
 
 const createGrid = (cells, cols, container) => {
@@ -54,7 +59,7 @@ const createGrid = (cells, cols, container) => {
 		cell.style.width = `calc(100% / ${cols})`;
 		cell.style.height = `calc(100% / ${cols})`;
 		container.appendChild(cell);
-		handleClick(cell, randomArray);
+		handleClick(cell, randomArray, cells);
 		footer.innerHTML = `${counter} tentativi riusciti`;
 	}
 };
