@@ -28,7 +28,7 @@ function handleClick(element, randomArray) {
 				canPlay = true;
 				counter++;
 				[...document.querySelectorAll('.cell')][index - 1].classList.add('active');
-				`${counter} tentativi riusciti`;
+				footer.innerHTML = `${counter} tentativi riusciti`;
 			} else {
 				canPlay = false;
 				[...document.querySelectorAll('.cell')][index - 1].classList.add('bomb');
@@ -64,7 +64,7 @@ button.addEventListener('click', () => {
 	const cols = amountOfCols(cells);
 	main.innerHTML = '';
 	canPlay = true;
-
+	counter = 0;
 	const grid = document.createElement('div');
 	grid.classList.add('grid');
 	createGrid(cells, cols, grid);
