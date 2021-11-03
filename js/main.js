@@ -6,6 +6,14 @@ const button = document.querySelector('.header-button');
 let counter = 0;
 let canPlay = true;
 /* Increment the logic */
+const randomArrayOfNumbers = (range) => {
+	let array = [];
+	while (array.length !== 16) {
+		const number = Math.floor(Math.random() * range) + 1;
+		if (!array.includes(number)) array.push(number);
+	}
+	return array;
+};
 
 /* Create the grid */
 const amountOfCells = (selectValue) => (selectValue === '1' ? 100 : selectValue === '2' ? 81 : 49);
