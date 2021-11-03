@@ -35,7 +35,7 @@ function handleClick(element, randomArray, cells) {
 					[...document.querySelectorAll('.cell')].forEach((el) => (el.style.cursor = 'default'));
 				}
 			} else if (randomArray.includes(index)) {
-				// canPlay = false;
+				canPlay = false;
 				[...document.querySelectorAll('.cell')][index - 1].classList.add('bomb');
 				randomArray.forEach((n) => [...document.querySelectorAll('.cell')][n - 1].classList.add('bomb'));
 				[...document.querySelectorAll('.cell')].forEach((el) => (el.style.cursor = 'default'));
